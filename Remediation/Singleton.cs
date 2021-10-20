@@ -7,16 +7,40 @@ namespace Remediation
 {
     public class Singleton
     {
-        private Singleton() { }
-        private static Singleton _instance;
+        private static Singleton instance;
+        private List<string> _servers = new List<string>();
+        private Random _random = new Random();
 
-        public static Singleton GetInstance()
+
+
+        private Singleton() {
+            _servers.Add("ServerI");
+            _servers.Add("ServerII");
+            _servers.Add("ServerIII");
+        }
+
+        public static Singleton GetInstance
         {
-            if (_instance == null)
+            get
             {
-                _instance = new Singleton();
+                if (instance == null)
+                    instance = new Singleton();
+                return instance;
             }
-            return _instance;
+        }
+
+        internal static Singleton GetInstance()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Server
+        {
+            get
+            {
+                int r = _random.Next(_servers.Count);
+                return _servers[r].ToString();
+            }
         }
     }
 }

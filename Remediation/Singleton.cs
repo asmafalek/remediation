@@ -7,16 +7,13 @@ namespace Remediation
 {
     public class Singleton
     {
-        private Singleton() { }
-        private static Singleton _instance;
+        private static readonly Lazy<Singleton> lazy =
+        new Lazy<Singleton>(() => new Singleton());
 
-        public static Singleton GetInstance()
-        {
-            if (_instance == null)
-            {
-                _instance = new Singleton();
-            }
-            return _instance;
-        }
+        public static Singleton Instance => lazy.Value;
+
+        private Singleton() { }
+
+        public string CreateMessage() => "Message";
     }
 }
